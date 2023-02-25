@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 
 plugins {
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "com.google.cloud.tools.jib" version "1.8.0"
+//    id "com.google.cloud.tools.jib" version "1.8.0"
     id "groovy"
     id "application"
 }
@@ -136,13 +136,13 @@ run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxrem
 // Build container image with JIB
 // https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin
 //
-jib.from.image = 'seqeralabs/nf-jdk:corretto-8u252'
-jib.to.image = 'tower-backend:latest'
-jib.container.creationTime = "${OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}"
-jib.container.filesModificationTime = "${OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}"
-jib.container.ports = ['8080']
-jib.container.entrypoint = '/bin/sh'
-jib.container.args = ['/tower.sh']  // copied from `src/main/jib` directory
-jib.extraDirectories.permissions = [
-        '/tower.sh': '755',
-        '/wait-for-it.sh':'755' ]
+//jib.from.image = 'seqeralabs/nf-jdk:corretto-8u252'
+//jib.to.image = 'tower-backend:latest'
+//jib.container.creationTime = "${OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}"
+//jib.container.filesModificationTime = "${OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}"
+//jib.container.ports = ['8080']
+//jib.container.entrypoint = '/bin/sh'
+//jib.container.args = ['/tower.sh']  // copied from `src/main/jib` directory
+//jib.extraDirectories.permissions = [
+//        '/tower.sh': '755',
+//        '/wait-for-it.sh':'755' ]
