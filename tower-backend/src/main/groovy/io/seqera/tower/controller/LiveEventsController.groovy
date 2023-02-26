@@ -47,6 +47,7 @@ class LiveEventsController {
 
 
     @Get("/")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     Publisher<Event<List<LiveUpdate>>> live(HttpRequest request) {
         log.debug("== Client subscribing to live events [remoteAddress=${request.remoteAddress}]")
         try {

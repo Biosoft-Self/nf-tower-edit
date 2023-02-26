@@ -26,3 +26,4 @@ cloud-deployment
 .vscode/*
 .env
 tower-web/*
+nextflow

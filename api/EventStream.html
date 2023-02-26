@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="list">
+
+    </div>
+
+    <!-- <script src="eventsource.js"></script> -->
+    <script>
+        
+        const evtSource = new EventSource("http://localhost:8000/api/live/", {
+            headers: {
+                "Cookie": "JWT=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2TjhLQmJxUiIsIm5iZiI6MTY3NzM3OTAwNiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6InRvd2VyLWJhY2tlbmQiLCJleHAiOjE2Nzc0NjU0MDYsImlhdCI6MTY3NzM3OTAwNn0.6HE676WHqXasultAluTJqzrQtBtOr-N76uiu_0OQ65g",
+                "aaa":'aaa'
+            },
+            "Cookie": "JWT=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2TjhLQmJxUiIsIm5iZiI6MTY3NzM3OTAwNiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6InRvd2VyLWJhY2tlbmQiLCJleHAiOjE2Nzc0NjU0MDYsImlhdCI6MTY3NzM3OTAwNn0.6HE676WHqXasultAluTJqzrQtBtOr-N76uiu_0OQ65g"
+
+            // withCredentials: true,
+            // Authorization: 'Bearer aaa',
+
+        });
+        evtSource.onmessage = (event) => {
+            console.log()
+            const newElement = document.createElement("li");
+            const eventList = document.getElementById("list");
+
+            newElement.textContent = `message: ${event.data}`;
+            eventList.appendChild(newElement);
+        };
+    </script>
+</body>
+
+</html>
