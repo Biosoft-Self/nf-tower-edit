@@ -18,6 +18,8 @@ import {AccessGateState} from "src/app/modules/main/entity/gate";
 import {environment} from "../../../../../environments/environment";
 import {AppConfigService} from '../../service/app-config.service';
 import { DOCUMENT } from '@angular/common';
+import { Data } from 'popper.js';
+import { User } from '../../entity/user/user';
 
 @Component({
   selector: 'wt-login',
@@ -33,6 +35,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   private isSubmitted: boolean;
 
   email: string;
+  user:User;
+  token:string;
   state: AccessGateState;
   captchaResponse;
   captchaKey = environment.captchaKey;
@@ -78,8 +82,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .subscribe(
           (data) => {
             this.state = data.state;
+            this.token =   "/auth?uid="+data.user.uid+"&token="+data.user.authToken;
+            console.log(this.token)
+            // http://localhost:8000/auth?uid=vN8KBbqR&token=d75be1d5e20ea90a7365f083f0171d9a68cde7e9
+
+            
           },
           (resp: HttpErrorResponse) => {
+           
             this.isSubmitted = false;
             this.notificationService.showErrorNotification(resp.error.message);
           }

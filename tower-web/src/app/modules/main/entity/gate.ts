@@ -9,9 +9,13 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
+// import { User } from "./user/user";
+import { UserData } from "./user/user-data";
+
 export interface AccessGateResponse {
   message: string;
   state: AccessGateState;
+  user:UserData
 }
 
 export enum AccessGateState {

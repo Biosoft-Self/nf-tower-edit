@@ -18,6 +18,8 @@ export interface UserData {
   description: string;
   notification: boolean;
   avatar: string;
+  authToken:string;
+  uid:string;
 }
 
 export interface DescribeUserResponse {

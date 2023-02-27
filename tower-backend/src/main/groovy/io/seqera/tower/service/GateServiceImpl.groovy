@@ -72,7 +72,7 @@ class GateServiceImpl implements GateService {
         if( result.user.trusted ) {
             // if the user is trusted send the login email
             result.state = AccessGateResponse.State.LOGIN_ALLOWED
-            sendLoginEmail(result.user)
+//            sendLoginEmail(result.user)
         }
         else if( isNew ) {
             // otherwise notify the system admin of a new user

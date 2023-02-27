@@ -24,7 +24,7 @@ import io.seqera.tower.exchange.BaseResponse
  * @author Paolo Di Tommaso <paolo.ditommaso@gmail.com>
  */
 @CompileStatic
-@JsonIgnoreProperties(['user'])
+//@JsonIgnoreProperties(['user'])
 class AccessGateResponse implements BaseResponse {
 
     static enum State {

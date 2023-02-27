@@ -11,7 +11,6 @@
 import {UserData} from "./user-data";
 
 export class User {
-
   data: UserData;
 
   constructor(userData: UserData) {

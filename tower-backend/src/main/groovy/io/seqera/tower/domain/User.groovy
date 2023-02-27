@@ -79,7 +79,7 @@ class User {
         options type: H8UserOptionsType
     }
 
-    @JsonIgnore
+//    @JsonIgnore
     @Memoized
     String getUid() {
         HashEncoder.encode(id)
