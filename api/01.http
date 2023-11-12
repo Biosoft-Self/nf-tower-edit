@@ -1,7 +1,7 @@
-GET http://localhost:8000/api/live/
-Accept: text/event-stream
-Cookie: JWT=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2TjhLQmJxUiIsIm5iZiI6MTY3NzM3OTAwNiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6InRvd2VyLWJhY2tlbmQiLCJleHAiOjE2Nzc0NjU0MDYsImlhdCI6MTY3NzM3OTAwNn0.6HE676WHqXasultAluTJqzrQtBtOr-N76uiu_0OQ65g
-Connection: keep-alive
+GET http://localhost:8088/workflow/list?max=30&offset=0
+# Accept: text/event-stream
+# Cookie: JWT=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2TjhLQmJxUiIsIm5iZiI6MTY3NzM3OTAwNiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6InRvd2VyLWJhY2tlbmQiLCJleHAiOjE2Nzc0NjU0MDYsImlhdCI6MTY3NzM3OTAwNn0.6HE676WHqXasultAluTJqzrQtBtOr-N76uiu_0OQ65g
+# Connection: keep-alive
 
 ###
 

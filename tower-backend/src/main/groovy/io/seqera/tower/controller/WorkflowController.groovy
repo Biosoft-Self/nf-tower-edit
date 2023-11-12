@@ -11,6 +11,8 @@
 
 package io.seqera.tower.controller
 
+import io.micronaut.security.rules.SecurityRule
+
 import javax.inject.Inject
 
 import grails.gorm.transactions.Transactional
@@ -59,7 +61,7 @@ import org.grails.datastore.mapping.validation.ValidationException
  */
 @Slf4j
 @CompileStatic
-@Secured(['ROLE_USER'])
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/workflow")
 class WorkflowController extends BaseController {
 
@@ -87,10 +89,9 @@ class WorkflowController extends BaseController {
         }
         return result
     }
-
     @Get("/list")
     @Transactional
-    HttpResponse<ListWorkflowResponse> list(Authentication authentication, HttpParameters filterParams) {
+    HttpResponse<ListWorkflowResponse> list( HttpParameters filterParams) {
         Long max = filterParams.getFirst('max', Long.class, 50l)
         Long offset = filterParams.getFirst('offset', Long.class, 0l)
         if( max>WORKFLOW_LIST_MAX_ALLOWED )
@@ -99,13 +100,31 @@ class WorkflowController extends BaseController {
         String search = filterParams.getFirst('search', String.class, '')
         String searchRegex = search ? search.contains('*') ? search.replaceAll(/\*/, '%') : "${search}%" : null
 
-        List<Workflow> workflows = workflowService.listByOwner(userService.getByAuth(authentication), max, offset, searchRegex)
-
+//        List<Workflow> workflows = workflowService.listByOwner(userService.getByAuth(authentication), max, offset, searchRegex)
+        List<Workflow> workflows = workflowService.listAll(max, offset, searchRegex);
         List<GetWorkflowResponse> result = workflows.collect { Workflow workflow ->
             GetWorkflowResponse.of(workflow)
         }
         HttpResponse.ok(ListWorkflowResponse.of(result))
     }
+//    @Get("/list")
+//    @Transactional
+//    HttpResponse<ListWorkflowResponse> list(Authentication authentication, HttpParameters filterParams) {
+//        Long max = filterParams.getFirst('max', Long.class, 50l)
+//        Long offset = filterParams.getFirst('offset', Long.class, 0l)
+//        if( max>WORKFLOW_LIST_MAX_ALLOWED )
+//            return HttpResponse.badRequest(ListWorkflowResponse.error("Workflow list max parameter cannot be greater than ${WORKFLOW_LIST_MAX_ALLOWED} (current value=$max)"))
+//
+//        String search = filterParams.getFirst('search', String.class, '')
+//        String searchRegex = search ? search.contains('*') ? search.replaceAll(/\*/, '%') : "${search}%" : null
+//
+//        List<Workflow> workflows = workflowService.listByOwner(userService.getByAuth(authentication), max, offset, searchRegex)
+//
+//        List<GetWorkflowResponse> result = workflows.collect { Workflow workflow ->
+//            GetWorkflowResponse.of(workflow)
+//        }
+//        HttpResponse.ok(ListWorkflowResponse.of(result))
+//    }
 
     /**
      * Endpoint invoked by the client to fetch workflow status

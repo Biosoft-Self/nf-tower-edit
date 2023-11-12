@@ -45,7 +45,7 @@ interface WorkflowService {
      * @return The list of workflow objects associated to the specified user
      */
     List<Workflow> listByOwner(User owner, Long max, Long offset, String sqlRegex)
-
+    List<Workflow> listAll(Long max, Long offset, String sqlRegex)
     /**
      * Delete the specified {@link Workflow} object
      *

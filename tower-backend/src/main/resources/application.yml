@@ -3,6 +3,46 @@ tower:
   serverUrl: "${TOWER_SERVER_URL:`http://localhost:8000`}"
   contactEmail: "${TOWER_CONTACT_EMAIL:hello@foo.com}"
 ---
+dataSource:
+  pooled: false
+#  dbCreate: create
+  url: jdbc:mysql://localhost:3306/nf_tower?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+  driverClassName: com.mysql.cj.jdbc.Driver
+  username: wangyang
+  password: 123456
+hibernate:
+  show_sql: true
+  ddl-auto: update
+  cache:
+    queries: false
+    use_second_level_cache: false
+    use_query_cache: false
+  dialect: io.seqera.util.MySQL55DialectCollateBin
+  naming_strategy: io.seqera.util.H8NamingStrategy
+grails:
+  gorm:
+    failOnError: false
+---
+mail:
+  debug: true
+  from: me@google.com
+  smtp:
+    host: localhost
+    port: 3025
+    user: mr-bean
+    password: super-secret
+    auth: true
+    starttls:
+      enable: false
+      required: false
+    proxy:
+      host: proxy.com
+      port: 5566
+---
+auth:
+  mail:
+    duration: 30m
+---
 micronaut:
   application:
     name: tower-backend
@@ -39,49 +79,3 @@ micronaut:
         generator:
           access-token-expiration: 86400
 ---
-jackson:
-  serialization:
-    writeDatesAsTimestamps: false
-  deserialization:
-    adjustDatesToContextTimeZone: false
-  serialization-inclusion: ALWAYS
-# ^^^^^^
-# Use this to avoid empty lists are stripped
-# See com.fasterxml.jackson.annotation.JsonInclude.Include.*
-#
----
-dataSource:
-  pooled: true
-  dbCreate: "${TOWER_DB_CREATE:`update`}"
-  url: "${TOWER_DB_URL:`jdbc:h2:file:./.db/h2/tower`}"
-  driverClassName: "${TOWER_DB_DRIVER:`org.h2.Driver`}"
-  username: "${TOWER_DB_USER:`sa`}"
-  password: "${TOWER_DB_PASSWORD:``}"
-hibernate:
-  cache:
-    queries: false
-    use_second_level_cache: false
-    use_query_cache: false
-  dialect: "${TOWER_DB_DIALECT:org.hibernate.dialect.H2Dialect}"
-  naming_strategy: io.seqera.util.H8NamingStrategy
-grails:
-  gorm:
-    failOnError: false
----
-mail:
-  from: "${TOWER_CONTACT_EMAIL:1749748955@qq.com}"
-  smtp:
-    host: "${TOWER_SMTP_HOST:smtp.qq.com}"
-    port: "${TOWER_SMTP_PORT:587}"
-#    auth: "${TOWER_SMTP_AUTH:true}"
-    user: "${TOWER_SMTP_USER:1749748955@qq.com}"
-    password: "${TOWER_SMTP_PASSWORD:fwixifgyozsobaec}"
-#    starttls:
-#      enable: true
-#      required: true
----
-live:
-  buffer:
-    time: 5s
-    count: 100
-    heartbeat: 50s

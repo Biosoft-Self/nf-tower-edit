@@ -168,5 +168,8 @@
       }
     }
   },
-  "defaultProject": "tower-web"
+  "defaultProject": "tower-web",
+  "cli": {
+    "analytics": "31e3faac-9639-44ff-9a7b-803cc43afbfc"
+  }
 }

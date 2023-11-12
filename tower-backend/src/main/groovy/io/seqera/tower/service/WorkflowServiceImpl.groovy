@@ -67,8 +67,24 @@ class WorkflowServiceImpl implements WorkflowService {
     Workflow get(String id) {
         Workflow.findById(id)
     }
-
     @CompileDynamic
+    @Override
+    List<Workflow> listAll( Long max, Long offset, String sqlRegex) {
+        new DetachedCriteria<Workflow>(Workflow).build {
+//            eq('owner', owner)
+            ne('deleted', true)
+            if (sqlRegex) {
+                or {
+                    ilike('projectName', sqlRegex)
+                    ilike('runName', sqlRegex)
+                }
+            }
+
+            order('start', 'desc')
+        }.list(max: max, offset: offset)
+    }
+    @CompileDynamic
+    @Override
     List<Workflow> listByOwner(User owner, Long max, Long offset, String sqlRegex) {
         new DetachedCriteria<Workflow>(Workflow).build {
             eq('owner', owner)
