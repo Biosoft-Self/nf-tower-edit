@@ -22,7 +22,8 @@ import io.seqera.tower.exchange.trace.TraceWorkflowRequest
 interface WorkflowService {
 
     String createWorkflowKey()
-
+    String createWorkflowKey(String workflowId)
+    String createWorkflow(String workflowId)
     /**
      * Get a {@link Workflow} by its primary the key
      *

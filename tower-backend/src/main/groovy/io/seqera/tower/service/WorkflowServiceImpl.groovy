@@ -60,7 +60,21 @@ class WorkflowServiceImpl implements WorkflowService {
         transactionService.withTransaction { record.workflowId=workflowId; record.save() }
         return workflowId
     }
-
+    @NotTransactional
+    String createWorkflowKey(String workflowId) {
+        final transactionService = appCtx.getBean(TransactionService)
+        final record = transactionService.withTransaction { new WorkflowKey() .save() }
+//        workflowId = HashSequenceGenerator.getHash(record.id)
+        transactionService.withTransaction { record.workflowId=workflowId; record.save() }
+        return workflowId
+    }
+    @Override
+    String createWorkflow(String workflowId){
+        Workflow workflow = new Workflow()
+        workflow.setId(workflowId)
+        workflow.save(flush:true)
+        return workflowId;
+    }
     @Override
     @CompileDynamic
     @Transactional(readOnly = true)
@@ -156,7 +170,7 @@ class WorkflowServiceImpl implements WorkflowService {
     Workflow createWorkflow(TraceBeginRequest request, User user) {
         checkRequiredFields(request.workflow)
 
-        if( !request.towerLaunch ) {
+        if( !request.towerLaunch  ||  get(request.workflow.id)==null) {
             final workflow = saveNewWorkflow(request.workflow, user)
             saveProcessNames(workflow, request.processNames)
             return workflow

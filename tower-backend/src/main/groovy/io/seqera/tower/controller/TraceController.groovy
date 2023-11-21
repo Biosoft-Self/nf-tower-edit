@@ -149,14 +149,25 @@ class TraceController extends BaseController {
         log.info "> Trace create request [user=${authentication.getName()}]"
         // note: when the execution is launched from Tower the workflowId is already given
         // and the a workflow entity should exists
-        if( req.workflowId && !workflowService.get(req.workflowId) )
-            return HttpResponse.badRequest(new TraceCreateResponse(message: "Unknown workflow launch id=$req.workflowId"))
+        def workflowId=req.workflowId;
+//        if( req.workflowId && !workflowService.get(req.workflowId) ){
+//            log.info("创建workflow{}",req.workflowId)
+//            workflowId= workflowService.createWorkflow(req.workflowId)
+//        }else {
+//            workflowId= req.workflowId
+//        }
+////            return HttpResponse.badRequest(new TraceCreateResponse(message: "Unknown workflow launch id=$req.workflowId"))
 
-        final workflowId = req.workflowId ?: workflowService.createWorkflowKey()
+//        final workflowId = req.workflowId ?: workflowService.createWorkflowKey()
+
         final resp = new TraceCreateResponse(workflowId: workflowId)
         log.info "> Created new workflow id=${workflowId} [user=${authentication.getName()}]${req.workflowId ? ' [from tower]' :''}"
         HttpResponse.ok(resp)
     }
+
+
+
+
 
     @Put("/{workflowId}/begin")
     @Transactional
