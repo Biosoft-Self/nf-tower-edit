@@ -32,6 +32,12 @@ WORKDIR /app/tower-backend-20.06.0/bin
 COPY docker-entrypoint.sh  .
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
+# ./gradlew assemble
+#  docker build -t wangyang1749/nf-tower-web .
+# docker login
+# docker run --rm  -p 82:80  wangyang1749/nf-tower-web:latest
+# docker image push  wangyang1749/nf-tower-web:latest
+
 
 
 

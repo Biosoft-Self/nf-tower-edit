@@ -150,10 +150,11 @@ class TraceController extends BaseController {
         // note: when the execution is launched from Tower the workflowId is already given
         // and the a workflow entity should exists
         def workflowId=req.workflowId;
-//        if( req.workflowId && !workflowService.get(req.workflowId) ){
-//            log.info("创建workflow{}",req.workflowId)
-//            workflowId= workflowService.createWorkflow(req.workflowId)
-//        }else {
+        if( !req.workflowId  ){
+            log.info("创建workflow{}",req.workflowId)
+            workflowId= workflowService.createWorkflowKey()
+        }
+//        else {
 //            workflowId= req.workflowId
 //        }
 ////            return HttpResponse.badRequest(new TraceCreateResponse(message: "Unknown workflow launch id=$req.workflowId"))
