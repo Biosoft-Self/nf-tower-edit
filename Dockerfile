@@ -43,7 +43,3 @@ ENTRYPOINT ["./docker-entrypoint.sh"]
 
 
 
-
-
-
-
