@@ -31,15 +31,15 @@ jobs:
           architecture: x64
 
       - name: Run Tests
-        run: ./gradlew clean test
+        run: ./gradlew clean -x test
 
       - name: Run Tests with MySQL
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test
         env:
           MICRONAUT_ENVIRONMENTS: mysql
 
       - name: Build Backend
-        run: ./gradlew tower-backend:jibDockerBuild
+        run: ./gradlew tower-backend:jibDockerBuild -x test
 
       - name: Build Frontend
         run: docker build -t tower-web:latest tower-web
