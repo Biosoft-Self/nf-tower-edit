@@ -39,7 +39,7 @@ jobs:
           MICRONAUT_ENVIRONMENTS: mysql
 
       - name: Build Backend
-        run: ./gradlew tower-backend:jibDockerBuild
+        run: ./gradlew build -x test
 
       - name: Build Frontend
         run: docker build -t tower-web:latest tower-web
@@ -60,13 +60,13 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and Push Docker Image
-        id: build-and-push
+      - name: Build and Push Backend Docker Image
+        id: build-and-push-backend
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./tower-backend
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}-backend
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -76,9 +76,16 @@ jobs:
           curl -sSL https://github.com/sigstore/cosign/releases/download/v1.9.0/cosign-linux-amd64 -o /usr/local/bin/cosign
           chmod +x /usr/local/bin/cosign
 
-      - name: Sign the Published Docker Image
+      - name: Sign the Published Docker Backend Image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}-backend
+          DIGEST: ${{ steps.build-and-push-backend.outputs.digest }}
+        run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+      - name: Sign the Published Docker Frontend Image
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}-frontend
+          DIGEST: ${{ steps.build-and-push-frontend.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
