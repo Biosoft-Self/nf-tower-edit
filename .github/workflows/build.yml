@@ -39,7 +39,7 @@ jobs:
           MICRONAUT_ENVIRONMENTS: mysql
 
       - name: Build Backend
-        run: ./gradlew tower-backend:jibDockerBuild -x test
+        run: ./gradlew tower-backend:jibDockerBuild
 
       - name: Build Frontend
         run: docker build -t tower-web:latest tower-web
