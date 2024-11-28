@@ -2,7 +2,6 @@
 FROM node:12.0.0-alpine AS builder
 
 RUN npm config set unsafe-perm true
-RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install -g @angular/cli
 
 WORKDIR /usr/src/app
