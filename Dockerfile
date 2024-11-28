@@ -16,7 +16,7 @@ RUN npm run build
 # RUN ./gradlew assemble 
 
 # Step 2: Use build output from 'builder'
-FROM adoptopenjdk/openjdk11
+FROM adoptopenjdk/openjdk11:alpine
 # LABEL version="1.0"
 RUN apt-get update &&  apt-get install nginx -y
 
