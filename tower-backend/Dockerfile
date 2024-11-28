@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11
+FROM adoptopenjdk/openjdk11:alpine
 RUN apk update && apk upgrade && apk add bash
 COPY build/libs/tower-backend-*.jar /tower/tower-backend-all.jar
 COPY tower.sh /usr/local/bin/tower.sh
