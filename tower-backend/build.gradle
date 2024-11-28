@@ -20,9 +20,12 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
-    google()
-    maven { url "https://jcenter.bintray.com" }
+    mavenCentral() // 推荐主要使用的仓库
+    google() // Google Maven，用于获取 Google 相关库
+    maven {
+        url 'https://repo.grails.org/grails/core' // Grails 核心仓库，提供 Groovy 相关依赖
+    }
+    // jcenter() // 如果一些旧版本的依赖无法从其他地方获取，才启用 jcenter (已停止服务)
 }
 
 dependencyManagement {
